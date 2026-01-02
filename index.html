@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-utensils"></i>
+                <span id="restaurant-name">Restaurant Billing</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-section="menu"><i class="fas fa-book"></i> Menu</a></li>
+                <li><a href="#" class="nav-link" data-section="cart"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cart-count">0</span></a></li>
+                <li><a href="#" class="nav-link" data-section="reports"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="#" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Menu Section -->
+        <section id="menu-section" class="content-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-book"></i> Menu Management</h2>
+                <button class="btn btn-primary" id="add-menu-item-btn">
+                    <i class="fas fa-plus"></i> Add Menu Item
+                </button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Menu items will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <section id="cart-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> Cart & Billing</h2>
+                <button class="btn btn-danger" id="clear-cart-btn">
+                    <i class="fas fa-trash"></i> Clear Cart
+                </button>
+            </div>
+            
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <p class="empty-cart">Your cart is empty</p>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (<span id="tax-rate-display">0</span>%):</span>
+                        <span id="cart-tax">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                    <button class="btn btn-success btn-large" id="pay-now-btn" disabled>
+                        <i class="fas fa-credit-card"></i> Pay Now
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Monthly Sales Report</h2>
+                <select id="month-select" class="month-select">
+                    <option value="current">Current Month</option>
+                </select>
+            </div>
+            
+            <div class="reports-container">
+                <div class="report-cards">
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="report-content">
+                            <h3>Total Sales</h3>
+                            <p class="report-value" id="total-sales">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <div class="report-content">
+                            <h3>Total Orders</h3>
+                            <p class="report-value" id="total-orders">0</p>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="report-content">
+                            <h3>Average Order</h3>
+                            <p class="report-value" id="average-order">$0.00</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="report-section">
+                    <h3>Top Selling Items</h3>
+                    <div class="top-items" id="top-items">
+                        <p>No sales data available</p>
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h3>Daily Sales Breakdown</h3>
+                    <div class="daily-sales" id="daily-sales">
+                        <p>No sales data available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+            </div>
+            
+            <div class="settings-container">
+                <div class="settings-card">
+                    <h3><i class="fas fa-store"></i> Restaurant Information</h3>
+                    <div class="form-group">
+                        <label for="restaurant-name-input">Restaurant Name</label>
+                        <input type="text" id="restaurant-name-input" class="form-input" placeholder="Enter restaurant name">
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurant-contact">Contact Information</label>
+                        <input type="text" id="restaurant-contact" class="form-input" placeholder="Phone, Email, Address">
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-percentage"></i> Billing Settings</h3>
+                    <div class="form-group">
+                        <label for="tax-rate-input">Tax Rate (%)</label>
+                        <input type="number" id="tax-rate-input" class="form-input" min="0" max="100" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="currency-input">Currency Symbol</label>
+                        <input type="text" id="currency-input" class="form-input" placeholder="$" maxlength="3">
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-qrcode"></i> Payment QR Code</h3>
+                    <div class="form-group">
+                        <label for="qr-code-upload">Upload QR Code Image</label>
+                        <input type="file" id="qr-code-upload" class="form-input" accept="image/*">
+                        <div class="qr-preview" id="qr-preview">
+                            <p>No QR code uploaded</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-large" id="save-settings-btn">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add/Edit Menu Item Modal -->
+    <div class="modal" id="menu-item-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Menu Item</h3>
+                <button class="modal-close" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="menu-item-form">
+                    <input type="hidden" id="menu-item-id">
+                    <div class="form-group">
+                        <label for="item-name">Item Name</label>
+                        <input type="text" id="item-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-price">Price</label>
+                        <input type="number" id="item-price" class="form-input" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" class="form-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-image-upload">Item Image</label>
+                        <input type="file" id="item-image-upload" class="form-input" accept="image/*">
+                        <div class="image-preview" id="item-image-preview">
+                            <p>No image selected</p>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-menu-item">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Payment Modal -->
+    <div class="modal" id="qr-payment-modal">
+        <div class="modal-content modal-qr">
+            <div class="modal-header">
+                <h3>Payment</h3>
+                <button class="modal-close" id="close-qr-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-info">
+                    <h4>Total Amount to Pay</h4>
+                    <p class="payment-amount" id="payment-amount">$0.00</p>
+                </div>
+                <div class="qr-code-display" id="qr-code-display">
+                    <p>No QR code uploaded. Please upload QR code in Settings.</p>
+                </div>
+                <div class="payment-actions">
+                    <button class="btn btn-secondary" id="cancel-payment">Cancel</button>
+                    <button class="btn btn-success" id="confirm-payment">
+                        <i class="fas fa-check"></i> Confirm Payment
+                    </button>
+                    <button class="btn btn-primary" id="print-bill-btn">
+                        <i class="fas fa-print"></i> Print Bill
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Print Bill Template (Hidden) -->
+    <div id="print-bill" class="print-bill">
+        <div class="bill-header">
+            <h2 id="bill-restaurant-name">Restaurant Name</h2>
+            <p id="bill-restaurant-contact">Contact Information</p>
+            <p id="bill-date"></p>
+        </div>
+        <div class="bill-items" id="bill-items-list">
+            <!-- Bill items will be inserted here -->
+        </div>
+        <div class="bill-footer">
+            <div class="bill-total">
+                <p>Subtotal: <span id="bill-subtotal">$0.00</span></p>
+                <p>Tax: <span id="bill-tax">$0.00</span></p>
+                <p class="bill-grand-total">Total: <span id="bill-total">$0.00</span></p>
+            </div>
+            <p class="bill-thankyou">Thank you for your visit!</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+
